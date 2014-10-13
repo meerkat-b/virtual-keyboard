@@ -24,107 +24,109 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.PolygonBuilder;
 
-public class VirtualKeyboard {
-  private final VBox root ;
-  
-  /**
+public class VirtualKeyboard extends VBox {
+
+    private static final double DEFAULT_SPACING = 5;
+
+    /**
+     * Creates a VirtualKeyboard which uses the focusProperty of the scene to which it is attached as its target
+     */
+    public VirtualKeyboard() {
+        this(null);
+    }
+
+    /**
    * Creates a Virtual Keyboard. 
    * @param target The node that will receive KeyEvents from this keyboard. 
    * If target is null, KeyEvents will be dynamically forwarded to the focus owner
    * in the Scene containing this keyboard.
    */
   public VirtualKeyboard(ReadOnlyObjectProperty<Node> target) {
-    this.root = new VBox(5);
-    root.setPadding(new Insets(10));
-    root.getStyleClass().add("virtual-keyboard");
+      super(DEFAULT_SPACING);
+      buildKeyboard(target);
+  }
 
-    final Modifiers modifiers = new Modifiers();
+  public void setTarget(ReadOnlyObjectProperty<Node> target) {
+      buildKeyboard(target);
+  }
 
-    // Data for regular buttons; split into rows
-    final String[][] unshifted = new String[][] {
-        { "`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=" },
-        { "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\" },
-        { "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'" },
-        { "z", "x", "c", "v", "b", "n", "m", ",", ".", "/" } };
+    private void buildKeyboard(ReadOnlyObjectProperty<Node> target) {
+        this.getChildren().clear();
+        if (target != null) System.out.println("****** New target: " + target.getName());
+        this.setPadding(new Insets(10));
+        this.getStyleClass().add("virtual-keyboard");
 
-    final String[][] shifted = new String[][] {
-        { "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+" },
-        { "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}", "|" },
-        { "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"" },
-        { "Z", "X", "C", "V", "B", "N", "M", "<", ">", "?" } };
+        final Modifiers modifiers = new Modifiers();
 
-    final KeyCode[][] codes = new KeyCode[][] {
-        { KeyCode.BACK_QUOTE, KeyCode.DIGIT1, KeyCode.DIGIT2, KeyCode.DIGIT3,
-            KeyCode.DIGIT4, KeyCode.DIGIT5, KeyCode.DIGIT6, KeyCode.DIGIT7,
-            KeyCode.DIGIT8, KeyCode.DIGIT9, KeyCode.DIGIT0, KeyCode.SUBTRACT,
-            KeyCode.EQUALS },
-        { KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T, KeyCode.Y,
-            KeyCode.U, KeyCode.I, KeyCode.O, KeyCode.P, KeyCode.OPEN_BRACKET,
-            KeyCode.CLOSE_BRACKET, KeyCode.BACK_SLASH },
-        { KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.F, KeyCode.G, KeyCode.H,
-            KeyCode.J, KeyCode.K, KeyCode.L, KeyCode.SEMICOLON, KeyCode.QUOTE },
-        { KeyCode.Z, KeyCode.X, KeyCode.C, KeyCode.V, KeyCode.B, KeyCode.N,
-            KeyCode.M, KeyCode.COMMA, KeyCode.PERIOD, KeyCode.SLASH } };
+        // Data for regular buttons; split into rows
+        final String[][] unshifted = new String[][] {
+            { "`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=" },
+            { "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\" },
+            { "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'" },
+            { "z", "x", "c", "v", "b", "n", "m", ",", ".", "/" } };
 
-    // non-regular buttons (don't respond to Shift)
-    final Button escape = createNonshiftableButton("Esc", KeyCode.ESCAPE, modifiers, target);
-    final Button backspace = createNonshiftableButton("Backspace", KeyCode.BACK_SPACE, modifiers, target);
-    final Button delete = createNonshiftableButton("Del", KeyCode.DELETE, modifiers, target);
-    final Button enter = createNonshiftableButton("Enter", KeyCode.ENTER,  modifiers, target);
-    final Button tab = createNonshiftableButton("Tab", KeyCode.TAB, modifiers, target);
+        final String[][] shifted = new String[][] {
+            { "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+" },
+            { "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}", "|" },
+            { "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"" },
+            { "Z", "X", "C", "V", "B", "N", "M", "<", ">", "?" } };
 
-    // Cursor keys, with graphic instead of text
-    final Button cursorLeft = createCursorKey(KeyCode.LEFT, modifiers, target, 15.0, 5.0, 15.0, 15.0, 5.0, 10.0);
-    final Button cursorRight = createCursorKey(KeyCode.RIGHT, modifiers, target, 5.0, 5.0, 5.0, 15.0, 15.0, 10.0);
-    final Button cursorUp = createCursorKey(KeyCode.UP, modifiers, target, 10.0, 0.0, 15.0, 10.0, 5.0, 10.0);
-    final Button cursorDown = createCursorKey(KeyCode.DOWN, modifiers, target, 10.0, 10.0, 15.0, 0.0, 5.0, 0.0);
-    final VBox cursorUpDown = new VBox(2);
-    cursorUpDown.getChildren().addAll(cursorUp, cursorDown);
+        final KeyCode[][] codes = new KeyCode[][] {
+            { KeyCode.BACK_QUOTE, KeyCode.DIGIT1, KeyCode.DIGIT2, KeyCode.DIGIT3,
+                KeyCode.DIGIT4, KeyCode.DIGIT5, KeyCode.DIGIT6, KeyCode.DIGIT7,
+                KeyCode.DIGIT8, KeyCode.DIGIT9, KeyCode.DIGIT0, KeyCode.SUBTRACT,
+                KeyCode.EQUALS },
+            { KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T, KeyCode.Y,
+                KeyCode.U, KeyCode.I, KeyCode.O, KeyCode.P, KeyCode.OPEN_BRACKET,
+                KeyCode.CLOSE_BRACKET, KeyCode.BACK_SLASH },
+            { KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.F, KeyCode.G, KeyCode.H,
+                KeyCode.J, KeyCode.K, KeyCode.L, KeyCode.SEMICOLON, KeyCode.QUOTE },
+            { KeyCode.Z, KeyCode.X, KeyCode.C, KeyCode.V, KeyCode.B, KeyCode.N,
+                KeyCode.M, KeyCode.COMMA, KeyCode.PERIOD, KeyCode.SLASH } };
 
-    // "Extras" to go at the left or right end of each row of buttons.
-    final Node[][] extraLeftButtons = new Node[][] { {escape}, {tab}, {modifiers.capsLockKey()}, {modifiers.shiftKey()} };
-    final Node[][] extraRightButtons = new Node[][] { {backspace}, {delete}, {enter}, {modifiers.secondShiftKey()} };
+        // non-regular buttons (don't respond to Shift)
+        final Button escape = createNonshiftableButton("Esc", KeyCode.ESCAPE, modifiers, target);
+        final Button backspace = createNonshiftableButton("Backspace", KeyCode.BACK_SPACE, modifiers, target);
+        final Button delete = createNonshiftableButton("Del", KeyCode.DELETE, modifiers, target);
+        final Button enter = createNonshiftableButton("Enter", KeyCode.ENTER,  modifiers, target);
+        final Button tab = createNonshiftableButton("Tab", KeyCode.TAB, modifiers, target);
 
-    // build layout
-    for (int row = 0; row < unshifted.length; row++) {
-      HBox hbox = new HBox(5);
-      hbox.setAlignment(Pos.CENTER);
-      root.getChildren().add(hbox);
+        // Cursor keys, with graphic instead of text
+        final Button cursorLeft = createCursorKey(KeyCode.LEFT, modifiers, target, 15.0, 5.0, 15.0, 15.0, 5.0, 10.0);
+        final Button cursorRight = createCursorKey(KeyCode.RIGHT, modifiers, target, 5.0, 5.0, 5.0, 15.0, 15.0, 10.0);
+        final Button cursorUp = createCursorKey(KeyCode.UP, modifiers, target, 10.0, 0.0, 15.0, 10.0, 5.0, 10.0);
+        final Button cursorDown = createCursorKey(KeyCode.DOWN, modifiers, target, 10.0, 10.0, 15.0, 0.0, 5.0, 0.0);
+        final VBox cursorUpDown = new VBox(2);
+        cursorUpDown.getChildren().addAll(cursorUp, cursorDown);
 
-      hbox.getChildren().addAll(extraLeftButtons[row]);
-      for (int k = 0; k < unshifted[row].length; k++) {
-        hbox.getChildren().add( createShiftableButton(unshifted[row][k], shifted[row][k], codes[row][k], modifiers, target));
-      }
-      hbox.getChildren().addAll(extraRightButtons[row]);
+        // "Extras" to go at the left or right end of each row of buttons.
+        final Node[][] extraLeftButtons = new Node[][] { {escape}, {tab}, {modifiers.capsLockKey()}, {modifiers.shiftKey()} };
+        final Node[][] extraRightButtons = new Node[][] { {backspace}, {delete}, {enter}, {modifiers.secondShiftKey()} };
+
+        // build layout
+        for (int row = 0; row < unshifted.length; row++) {
+          HBox hbox = new HBox(5);
+          hbox.setAlignment(Pos.CENTER);
+          this.getChildren().add(hbox);
+
+          hbox.getChildren().addAll(extraLeftButtons[row]);
+          for (int k = 0; k < unshifted[row].length; k++) {
+            hbox.getChildren().add( createShiftableButton(unshifted[row][k], shifted[row][k], codes[row][k], modifiers, target));
+          }
+          hbox.getChildren().addAll(extraRightButtons[row]);
+        }
+
+        final Button spaceBar = createNonshiftableButton(" ", KeyCode.SPACE, modifiers, target);
+        spaceBar.setMaxWidth(Double.POSITIVE_INFINITY);
+        HBox.setHgrow(spaceBar, Priority.ALWAYS);
+
+        final HBox bottomRow = new HBox(5);
+        bottomRow.setAlignment(Pos.CENTER);
+        bottomRow.getChildren().addAll(modifiers.ctrlKey(), modifiers.altKey(),
+            modifiers.metaKey(), spaceBar, cursorLeft, cursorUpDown, cursorRight);
+        this.getChildren().add(bottomRow);
     }
 
-    final Button spaceBar = createNonshiftableButton(" ", KeyCode.SPACE, modifiers, target);
-    spaceBar.setMaxWidth(Double.POSITIVE_INFINITY);
-    HBox.setHgrow(spaceBar, Priority.ALWAYS);
-
-    final HBox bottomRow = new HBox(5);
-    bottomRow.setAlignment(Pos.CENTER);
-    bottomRow.getChildren().addAll(modifiers.ctrlKey(), modifiers.altKey(),
-        modifiers.metaKey(), spaceBar, cursorLeft, cursorUpDown, cursorRight);
-    root.getChildren().add(bottomRow);    
-  }
-  
-  /**
-   * Creates a VirtualKeyboard which uses the focusProperty of the scene to which it is attached as its target
-   */
-  public VirtualKeyboard() {
-    this(null);
-  }
-  
-  /**
-   * Visual component displaying this keyboard. The returned node has a style class of "virtual-keyboard".
-   * Buttons in the view have a style class of "virtual-keyboard-button".
-   * @return a view of the keyboard.
-   */
-  public Node view() {
-    return root ;
-  }
-  
   // Creates a "regular" button that has an unshifted and shifted value
   private Button createShiftableButton(final String unshifted, final String shifted,
       final KeyCode code, Modifiers modifiers, final ReadOnlyObjectProperty<Node> target) {
@@ -163,7 +165,7 @@ public class VirtualKeyboard {
         if (target != null) {
           targetNode = target.get();
         } else {
-          targetNode = view().getScene().getFocusOwner();
+          targetNode = VirtualKeyboard.this.getScene().getFocusOwner();
         }
         
         if (targetNode != null) {

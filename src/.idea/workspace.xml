@@ -26,13 +26,23 @@
       <file leaf-file-name="VirtualKeyboardExample.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/VirtualKeyboardExample.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.56119794" vertical-offset="2077" max-vertical-offset="3366">
-              <caret line="76" column="18" selection-start-line="76" selection-start-column="18" selection-end-line="76" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.87109375" vertical-offset="2400" max-vertical-offset="4059">
+              <caret line="93" column="79" selection-start-line="93" selection-start-column="79" selection-end-line="93" selection-end-column="79" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3384#3385#0" expanded="true" />
-                <element signature="e#3406#3407#0" expanded="true" />
+                <element signature="e#4302#4303#0" expanded="true" />
+                <element signature="e#4324#4325#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Node.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/javafx-src.zip!/javafx/scene/Node.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="97971" max-vertical-offset="126330">
+              <caret line="7307" column="22" selection-start-line="7307" selection-start-column="22" selection-end-line="7307" selection-end-column="22" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -583,8 +593,8 @@
           <caret line="74" column="21" selection-start-line="74" selection-start-column="21" selection-end-line="74" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3384#3385#0" expanded="true" />
-            <element signature="e#3406#3407#0" expanded="true" />
+            <element signature="e#4302#4303#0" expanded="true" />
+            <element signature="e#4324#4325#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -706,14 +716,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/javafx-src.zip!/javafx/scene/Node.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="92511" max-vertical-offset="126330">
-          <caret line="6841" column="18" selection-start-line="6841" selection-start-column="18" selection-end-line="6841" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/javafx-src.zip!/javafx/beans/property/ObjectProperty.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5654912" vertical-offset="61" max-vertical-offset="1230">
@@ -767,14 +769,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/javafx-src.zip!/javafx/scene/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="97971" max-vertical-offset="126330">
+          <caret line="7307" column="22" selection-start-line="7307" selection-start-column="22" selection-end-line="7307" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/VirtualKeyboardExample.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56119794" vertical-offset="2077" max-vertical-offset="3366">
-          <caret line="76" column="18" selection-start-line="76" selection-start-column="18" selection-end-line="76" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.87109375" vertical-offset="2400" max-vertical-offset="4059">
+          <caret line="93" column="79" selection-start-line="93" selection-start-column="79" selection-end-line="93" selection-end-column="79" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3384#3385#0" expanded="true" />
-            <element signature="e#3406#3407#0" expanded="true" />
+            <element signature="e#4302#4303#0" expanded="true" />
+            <element signature="e#4324#4325#0" expanded="true" />
           </folding>
         </state>
       </provider>

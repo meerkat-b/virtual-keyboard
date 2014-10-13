@@ -1,6 +1,8 @@
 import javafx.application.Application;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -74,14 +76,33 @@ public class VirtualKeyboardExample extends Application {
             }
         });
 
-        textField.setOnMouseClicked((mouseEvent) -> {
-            System.out.println("Mouse entered textfield 1");
-            popupKeyboard.setTarget(new SimpleObjectProperty(textField));
+        textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+            {
+                if (newPropertyValue) {
+                    popupKeyboard.setTarget(new SimpleObjectProperty(textField));
+                }
+            }
         });
-        textField2.setOnMouseClicked((mouseEvent) -> {
-            System.out.println("Mouse entered textfield 2");
-            popupKeyboard.setTarget(new SimpleObjectProperty(textField2));
+
+        textField2.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+            {
+                if (newPropertyValue) {
+                    popupKeyboard.setTarget(new SimpleObjectProperty(textField2));
+                }
+            }
         });
+//        textField.setOnTouchPressed((mouseEvent) -> {
+//            System.out.println("Mouse entered textfield 1");
+//            popupKeyboard.setTarget(new SimpleObjectProperty(textField));
+//        });
+//        textField2.setOnTouchPressed((mouseEvent) -> {
+//            System.out.println("Mouse entered textfield 2");
+//            popupKeyboard.setTarget(new SimpleObjectProperty(textField2));
+//        });
 
         root.getChildren().addAll(textField, textField2, showKeyboardButton, popupKeyboardButton);
 

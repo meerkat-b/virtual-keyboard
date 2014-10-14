@@ -26,16 +26,16 @@ import javafx.scene.shape.PolygonBuilder;
 
 public class VirtualKeyboard extends VBox {
 
-    private static final double DEFAULT_SPACING = 5;
+	private static final double DEFAULT_SPACING = 5;
 
-    public VirtualKeyboard() {
-        this(null);
+	public VirtualKeyboard() {
+	    this(null);
+	}
+
+	public VirtualKeyboard(ReadOnlyObjectProperty<Node> target) {
+        super(DEFAULT_SPACING);
+        buildKeyboard(target);
     }
-
-  public VirtualKeyboard(ReadOnlyObjectProperty<Node> target) {
-      super(DEFAULT_SPACING);
-      buildKeyboard(target);
-  }
 
     public void setTarget(ReadOnlyObjectProperty<Node> target) {
       buildKeyboard(target);
@@ -43,7 +43,7 @@ public class VirtualKeyboard extends VBox {
 
     private void buildKeyboard(ReadOnlyObjectProperty<Node> target) {
         this.getChildren().clear();
-        if (target != null) System.out.println("****** New target: " + target.getName());
+        if (target != null) System.out.println("****** New target ******");
         this.setPadding(new Insets(10));
         this.getStyleClass().add("virtual-keyboard");
 

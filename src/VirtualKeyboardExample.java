@@ -41,17 +41,14 @@ public class VirtualKeyboardExample extends Application {
 
         //button which adds and removes the keyboard to the root scene
         final Button showKeyboardButton = new Button("Show Keyboard!");
-        showKeyboardButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (keyboardNotShown) {
-                    root.getChildren().add(vkb);
-                } else {
-                    root.getChildren().remove(vkb);
-                }
-                keyboardNotShown = !keyboardNotShown;
-                primaryStage.sizeToScene();
+        showKeyboardButton.setOnAction(event -> {
+            if (keyboardNotShown) {
+                root.getChildren().add(vkb);
+            } else {
+                root.getChildren().remove(vkb);
             }
+            keyboardNotShown = !keyboardNotShown;
+            primaryStage.sizeToScene();
         });
 
         VirtualKeyboard popupVkb = new VirtualKeyboard();
@@ -60,38 +57,26 @@ public class VirtualKeyboardExample extends Application {
         keyboardPopupWindow.initOwner(primaryStage);
         Scene keyboardScene = new Scene(popupVkb);
         keyboardPopupWindow.setScene(keyboardScene);
-        
+
         final Button popupKeyboardButton = new Button("Open Keyboard!");
-        popupKeyboardButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        popupKeyboardButton.setOnAction(event -> {
+            if (keyboardNotShown) {
+                keyboardPopupWindow.show();
+            } else {
+                keyboardPopupWindow.close();
+            }
+            keyboardNotShown = !keyboardNotShown;
+        });
 
-                if (keyboardNotShown) {
-                    keyboardPopupWindow.show();
-                } else {
-                    keyboardPopupWindow.close();
-                }
-                keyboardNotShown = !keyboardNotShown;
+        textField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue) {
+                popupVkb.setTarget(new SimpleObjectProperty(textField));
             }
         });
 
-        textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-            {
-                if (newPropertyValue) {
-                    popupVkb.setTarget(new SimpleObjectProperty(textField));
-                }
-            }
-        });
-
-        textField2.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
-            {
-                if (newPropertyValue) {
-                    popupVkb.setTarget(new SimpleObjectProperty(textField2));
-                }
+        textField2.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue) {
+                popupVkb.setTarget(new SimpleObjectProperty(textField2));
             }
         });
 //        textField.setOnTouchPressed((mouseEvent) -> {

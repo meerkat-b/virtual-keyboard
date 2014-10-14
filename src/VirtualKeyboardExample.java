@@ -54,23 +54,22 @@ public class VirtualKeyboardExample extends Application {
             }
         });
 
-        VirtualKeyboard popupKeyboard = new VirtualKeyboard();
+        VirtualKeyboard popupVkb = new VirtualKeyboard();
+        final Stage keyboardPopupWindow = new Stage();
+        keyboardPopupWindow.initModality(Modality.NONE);
+        keyboardPopupWindow.initOwner(primaryStage);
+        Scene keyboardScene = new Scene(popupVkb);
+        keyboardPopupWindow.setScene(keyboardScene);
+        
         final Button popupKeyboardButton = new Button("Open Keyboard!");
         popupKeyboardButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                final Stage keyboardPopup = new Stage();
-                keyboardPopup.initModality(Modality.NONE);
-                keyboardPopup.initOwner(primaryStage);
-                VBox keyboardVBox = new VBox(20);
-                keyboardVBox.getChildren().add(popupKeyboard);
-                Scene keyboardScene = new Scene(keyboardVBox);
-                keyboardPopup.setScene(keyboardScene);
 
                 if (keyboardNotShown) {
-                    keyboardPopup.show();
+                    keyboardPopupWindow.show();
                 } else {
-                    keyboardPopup.hide();
+                    keyboardPopupWindow.close();
                 }
                 keyboardNotShown = !keyboardNotShown;
             }
@@ -81,7 +80,7 @@ public class VirtualKeyboardExample extends Application {
             public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
             {
                 if (newPropertyValue) {
-                    popupKeyboard.setTarget(new SimpleObjectProperty(textField));
+                    popupVkb.setTarget(new SimpleObjectProperty(textField));
                 }
             }
         });
@@ -91,7 +90,7 @@ public class VirtualKeyboardExample extends Application {
             public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
             {
                 if (newPropertyValue) {
-                    popupKeyboard.setTarget(new SimpleObjectProperty(textField2));
+                    popupVkb.setTarget(new SimpleObjectProperty(textField2));
                 }
             }
         });

@@ -28,25 +28,16 @@ public class VirtualKeyboard extends VBox {
 
     private static final double DEFAULT_SPACING = 5;
 
-    /**
-     * Creates a VirtualKeyboard which uses the focusProperty of the scene to which it is attached as its target
-     */
     public VirtualKeyboard() {
         this(null);
     }
 
-    /**
-   * Creates a Virtual Keyboard. 
-   * @param target The node that will receive KeyEvents from this keyboard. 
-   * If target is null, KeyEvents will be dynamically forwarded to the focus owner
-   * in the Scene containing this keyboard.
-   */
   public VirtualKeyboard(ReadOnlyObjectProperty<Node> target) {
       super(DEFAULT_SPACING);
       buildKeyboard(target);
   }
 
-  public void setTarget(ReadOnlyObjectProperty<Node> target) {
+    public void setTarget(ReadOnlyObjectProperty<Node> target) {
       buildKeyboard(target);
   }
 
@@ -150,7 +141,7 @@ public class VirtualKeyboard extends VBox {
   private Button createButton(final ObservableStringValue text, final KeyCode code, final Modifiers modifiers, final ReadOnlyObjectProperty<Node> target) {
     final Button button = new Button();
     button.textProperty().bind(text);
-        
+
     // Important not to grab the focus from the target:
     button.setFocusTraversable(false);
     
